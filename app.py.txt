@@ -1,0 +1,25 @@
+from flask import Flask, request, jsonify
+import requests
+
+app = Flask(__name__)
+
+# Bu bilgileri Render.com ortam değişkenleri olarak ayarlayacağız
+TRENDYOL_SUPPLIER_ID = os.getenv("TRENDYOL_SUPPLIER_ID")
+CLIENT_ID = os.getenv("TRENDYOL_CLIENT_ID")
+CLIENT_SECRET = os.getenv("TRENDYOL_CLIENT_SECRET")
+
+@app.route("/siparisler", methods=["GET"])
+def get_orders():
+    try:
+        url = f"https://api.trendyol.com/sapigw/suppliers/{TRENDYOL_SUPPLIER_ID}/orders"
+        headers = {
+            "User-Agent": "openapi",
+            "Authorization": f"Basic {CLIENT_ID}:{CLIENT_SECRET}"
+        }
+        response = requests.get(url, headers=headers)
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=True)

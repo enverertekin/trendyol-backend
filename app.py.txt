@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
-# Bu bilgileri Render.com ortam değişkenleri olarak ayarlayacağız
 TRENDYOL_SUPPLIER_ID = os.getenv("TRENDYOL_SUPPLIER_ID")
 CLIENT_ID = os.getenv("TRENDYOL_CLIENT_ID")
 CLIENT_SECRET = os.getenv("TRENDYOL_CLIENT_SECRET")
